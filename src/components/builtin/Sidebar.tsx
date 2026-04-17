@@ -156,11 +156,6 @@ export default function AppLayout() {
                                 </PopoverHeader>
                             </PopoverContent>
                         </Popover>
-
-                        <Avatar className="cursor-pointer ring-2 ring-zinc-800">
-                            <AvatarImage src="https://github.com/shadcn.png" />
-                            <AvatarFallback className="bg-zinc-800">JT</AvatarFallback>
-                        </Avatar>
                     </header>
 
                     {/* MAIN */}
