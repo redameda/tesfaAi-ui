@@ -130,36 +130,35 @@ export default function AppLayout({
 
                     {/* HEADER */}
                     <header className="md:hidden fixed top-0 left-0 right-0 w-screen border-b border-zinc-800/50 px-4 py-4 flex items-center justify-between bg-zinc-950 z-50">
-                        <Drawer direction="top">
-                            <DrawerTrigger asChild>
+                        <Drawer direction="top" >
+                            <DrawerTrigger asChild >
                                 <Badge className="bg-blue-600  text-white px-6 py-4 text-base rounded-full flex items-center gap-2 font-semibold">
                                     <Lightbulb className="w-5 h-5" />
                                     {activeSubject}
                                     <span className="ml-1 text-sm opacity-90">100XP</span>
                                 </Badge>
                             </DrawerTrigger>
-                            <DrawerContent>
+                            <DrawerContent className="rounded-none">
                                 <DrawerHeader>
                                     <DrawerTitle>Choose subject</DrawerTitle>
-                                    <ScrollArea>
-                                        <div className="flex gap-2 flex-nowrap">
+                                    <ScrollArea className="w-full whitespace-nowrap">
 
-                                            {subjects.map((subject) => (
-                                                <Button
-                                                    key={subject}
-                                                    variant={activeSubject === subject ? "default" : "ghost"}
-                                                    size="sm"
-                                                    className={`transition-all ${activeSubject === subject
-                                                        ? "bg-blue-600 text-white"
-                                                        : "hover:bg-zinc-900 border-zinc-700"
-                                                        }`}
-                                                    onClick={() => setActiveSubject(subject)}
-                                                >
-                                                    {subject}
-                                                </Button>
-                                            ))}
-                                            <ScrollBar orientation="horizontal" />
-                                        </div>
+
+                                        {subjects.map((subject) => (
+                                            <Button
+                                                key={subject}
+                                                variant={activeSubject === subject ? "default" : "ghost"}
+                                                size="sm"
+                                                className={`transition-all ${activeSubject === subject
+                                                    ? "bg-blue-600 text-white"
+                                                    : "hover:bg-zinc-900 border-zinc-700"
+                                                    }`}
+                                                onClick={() => setActiveSubject(subject)}
+                                            >
+                                                {subject}
+                                            </Button>
+                                        ))}
+
                                     </ScrollArea>
                                 </DrawerHeader>
                             </DrawerContent>
