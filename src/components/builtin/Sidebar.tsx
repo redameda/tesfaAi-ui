@@ -149,8 +149,8 @@ export default function AppLayout({
                                                     variant={activeSubject === subject ? "default" : "ghost"}
                                                     size="sm"
                                                     className={`whitespace-nowrap transition-all ${activeSubject === subject
-                                                            ? "bg-blue-600 text-white"
-                                                            : "hover:bg-zinc-900 border-zinc-700"
+                                                        ? "bg-blue-600 text-white"
+                                                        : "hover:bg-zinc-900 border-zinc-700"
                                                         }`}
                                                     onClick={() => setActiveSubject(subject)}
                                                 >
@@ -158,6 +158,7 @@ export default function AppLayout({
                                                 </Button>
                                             ))}
                                         </div>
+                                        <ScrollBar orientation="horizontal" className="opacity-30" />
                                     </ScrollArea>
                                 </DrawerHeader>
                             </DrawerContent>
