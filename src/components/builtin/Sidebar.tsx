@@ -141,24 +141,23 @@ export default function AppLayout({
                             <DrawerContent className="rounded-none">
                                 <DrawerHeader>
                                     <DrawerTitle>Choose subject</DrawerTitle>
-                                    <ScrollArea className="w-full whitespace-nowrap">
-
-
-                                        {subjects.map((subject) => (
-                                            <Button
-                                                key={subject}
-                                                variant={activeSubject === subject ? "default" : "ghost"}
-                                                size="sm"
-                                                className={`transition-all ${activeSubject === subject
-                                                    ? "bg-blue-600 text-white"
-                                                    : "hover:bg-zinc-900 border-zinc-700"
-                                                    }`}
-                                                onClick={() => setActiveSubject(subject)}
-                                            >
-                                                {subject}
-                                            </Button>
-                                        ))}
-
+                                    <ScrollArea className="w-full">
+                                        <div className="flex w-max gap-2 p-2">
+                                            {subjects.map((subject) => (
+                                                <Button
+                                                    key={subject}
+                                                    variant={activeSubject === subject ? "default" : "ghost"}
+                                                    size="sm"
+                                                    className={`whitespace-nowrap transition-all ${activeSubject === subject
+                                                            ? "bg-blue-600 text-white"
+                                                            : "hover:bg-zinc-900 border-zinc-700"
+                                                        }`}
+                                                    onClick={() => setActiveSubject(subject)}
+                                                >
+                                                    {subject}
+                                                </Button>
+                                            ))}
+                                        </div>
                                     </ScrollArea>
                                 </DrawerHeader>
                             </DrawerContent>
