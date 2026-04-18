@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
     Home,
     Briefcase,
@@ -29,7 +29,8 @@ import {
     SidebarProvider,
     SidebarRail,
 } from "@/components/ui/sidebar";
-import { Popover, PopoverContent, PopoverHeader, PopoverTitle, PopoverTrigger } from "../ui/popover";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "../ui/drawer";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 // Hub Navigation
 const hubNav = [
@@ -43,7 +44,11 @@ const hubNav = [
 // Subjects
 const subjects = ["Mathematics", "Biology", "Physics", "Chemistry", "History", "Economics", "Geography"];
 
-export default function AppLayout() {
+export default function AppLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
     const pathname = usePathname();
     const [activeSubject, setActiveSubject] = useState("Mathematics");
 
@@ -92,7 +97,6 @@ export default function AppLayout() {
                             </SidebarGroupContent>
                         </SidebarGroup>
 
-                        {/* HUB (NOW IN NORMAL CONTENT, NOT FOOTER) */}
                         <SidebarGroup>
                             <SidebarGroupLabel className="text-sm uppercase tracking-widest text-zinc-500 px-4 mb-2">
                                 Hub
@@ -126,42 +130,46 @@ export default function AppLayout() {
 
                     {/* HEADER */}
                     <header className="md:hidden fixed top-0 left-0 right-0 w-screen border-b border-zinc-800/50 px-4 py-4 flex items-center justify-between bg-zinc-950 z-50">
-                        <Popover>
-                            <PopoverTrigger asChild>
+                        <Drawer direction="top">
+                            <DrawerTrigger asChild>
                                 <Badge className="bg-blue-600  text-white px-6 py-4 text-base rounded-full flex items-center gap-2 font-semibold">
                                     <Lightbulb className="w-5 h-5" />
                                     {activeSubject}
                                     <span className="ml-1 text-sm opacity-90">100XP</span>
                                 </Badge>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                                <PopoverHeader>
-                                    <PopoverTitle>Choose subject</PopoverTitle>
-                                    <div className="flex flex-wrap gap-2">
-                                        {subjects.map((subject) => (
-                                            <Button
-                                                key={subject}
-                                                variant={activeSubject === subject ? "default" : "ghost"}
-                                                size="sm"
-                                                className={`transition-all ${activeSubject === subject
-                                                    ? "bg-blue-600 text-white"
-                                                    : "hover:bg-zinc-900 border-zinc-700"
-                                                    }`}
-                                                onClick={() => setActiveSubject(subject)}
-                                            >
-                                                {subject}
-                                            </Button>
-                                        ))}
-                                    </div>
-                                </PopoverHeader>
-                            </PopoverContent>
-                        </Popover>
+                            </DrawerTrigger>
+                            <DrawerContent>
+                                <DrawerHeader>
+                                    <DrawerTitle>Choose subject</DrawerTitle>
+                                    <ScrollArea>
+                                        <div className="flex gap-2 flex-nowrap">
+
+                                            {subjects.map((subject) => (
+                                                <Button
+                                                    key={subject}
+                                                    variant={activeSubject === subject ? "default" : "ghost"}
+                                                    size="sm"
+                                                    className={`transition-all ${activeSubject === subject
+                                                        ? "bg-blue-600 text-white"
+                                                        : "hover:bg-zinc-900 border-zinc-700"
+                                                        }`}
+                                                    onClick={() => setActiveSubject(subject)}
+                                                >
+                                                    {subject}
+                                                </Button>
+                                            ))}
+                                            <ScrollBar orientation="horizontal" />
+                                        </div>
+                                    </ScrollArea>
+                                </DrawerHeader>
+                            </DrawerContent>
+                        </Drawer>
                     </header>
 
                     {/* MAIN */}
                     <main className="flex-1 overflow-auto pt-20 px-0 pb-20 md:p-6">
                         <div className="text-zinc-400">
-                            {activeSubject} content will appear here...
+                            {children}
                         </div>
                     </main>
 

@@ -3,8 +3,6 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/ui/sidebar";
-import AppLayout from "@/components/builtin/Sidebar";
-
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 const geistSans = Geist({
@@ -33,7 +31,7 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", "dark", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
     >
       <body className="">
-        <AppLayout />
+        {children}
       </body>
     </html>
   );
