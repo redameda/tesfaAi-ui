@@ -36,7 +36,6 @@ import {
 } from "@/components/ui/drawer";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import MainP from "./MainP";
 
 const hubNav = [
     { href: "/", label: "Home", icon: Home },
@@ -188,7 +187,7 @@ export default function AppLayout() {
                     {/* CONTENT */}
                     <main className="flex-1 overflow-auto pt-20 px-4 pb-20 md:p-6">
                         <div className="text-muted-foreground">
-                            <MainP grade={"9"} subject={activeSubject.toLowerCase()} />f
+                            The new platform for the web
                         </div>
                     </main>
 
