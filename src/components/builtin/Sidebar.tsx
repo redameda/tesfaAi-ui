@@ -9,7 +9,6 @@ import {
     BarChart3,
     FileText,
     User,
-    Lightbulb,
     BookOpen,
 } from "lucide-react";
 
@@ -33,11 +32,11 @@ import {
     Drawer,
     DrawerContent,
     DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import MainP from "./MainP";
 
 const hubNav = [
     { href: "/", label: "Home", icon: Home },
@@ -57,13 +56,12 @@ const subjects = [
     "Geography",
 ];
 
-export default function AppLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function AppLayout() {
     const pathname = usePathname();
     const [activeSubject, setActiveSubject] = useState("Mathematics");
+
+    const isActive = (href: string) =>
+        pathname === href || pathname.startsWith(href + "/");
 
     return (
         <SidebarProvider>
@@ -101,7 +99,6 @@ export default function AppLayout({
                                                 activeSubject === subject ? "default" : "ghost"
                                             }
                                             size="sm"
-                                            className="transition-all"
                                             onClick={() => setActiveSubject(subject)}
                                         >
                                             {subject}
@@ -120,12 +117,17 @@ export default function AppLayout({
                             <SidebarGroupContent>
                                 <SidebarMenu>
                                     {hubNav.map((item) => {
-                                        const isActive = pathname === item.href;
+                                        const active = isActive(item.href);
 
                                         return (
                                             <SidebarMenuItem key={item.href}>
-                                                <SidebarMenuButton asChild isActive={isActive}>
-                                                    <Link href={item.href}>
+                                                <SidebarMenuButton asChild isActive={active}>
+                                                    <Link
+                                                        href={item.href}
+                                                        className={
+                                                            active ? "text-primary font-medium" : ""
+                                                        }
+                                                    >
                                                         <item.icon />
                                                         <span>{item.label}</span>
                                                     </Link>
@@ -144,19 +146,20 @@ export default function AppLayout({
                 {/* MAIN */}
                 <div className="flex-1 flex flex-col overflow-hidden">
 
-                    {/* HEADER */}
+                    {/* HEADER (MOBILE) */}
                     <header className="md:hidden fixed top-0 left-0 right-0 border-b border-border px-4 py-4 flex items-center justify-between bg-background z-50">
                         <Drawer direction="top">
                             <DrawerTrigger asChild>
-                                <Badge className="bg-primary text-primary-foreground px-4 py-2">
-                                    <Lightbulb className="w-4 h-4 mr-2" />
+                                <Badge className="bg-primary text-primary-foreground py-2 px-3">
                                     {activeSubject}
                                 </Badge>
                             </DrawerTrigger>
 
                             <DrawerContent className="rounded-none bg-background">
                                 <DrawerHeader>
-                                    <DrawerTitle>Choose subject</DrawerTitle>
+                                    <Badge className="py-3">
+                                        Grade 9 Learning Subjects
+                                    </Badge>
 
                                     <ScrollArea className="w-full">
                                         <div className="flex w-max gap-2 p-2">
@@ -164,16 +167,18 @@ export default function AppLayout({
                                                 <Button
                                                     key={subject}
                                                     variant={
-                                                        activeSubject === subject ? "default" : "ghost"
+                                                        activeSubject === subject
+                                                            ? "default"
+                                                            : "ghost"
                                                     }
                                                     size="sm"
-                                                    className="whitespace-nowrap"
                                                     onClick={() => setActiveSubject(subject)}
                                                 >
                                                     {subject}
                                                 </Button>
                                             ))}
                                         </div>
+                                        <ScrollBar orientation="horizontal" />
                                     </ScrollArea>
                                 </DrawerHeader>
                             </DrawerContent>
@@ -182,26 +187,30 @@ export default function AppLayout({
 
                     {/* CONTENT */}
                     <main className="flex-1 overflow-auto pt-20 px-4 pb-20 md:p-6">
-                        <div className="text-muted-foreground">{children}</div>
+                        <div className="text-muted-foreground">
+                            <MainP grade={"9"} subject={activeSubject.toLowerCase()} />f
+                        </div>
                     </main>
 
                     {/* MOBILE NAV */}
                     <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-background mx-4 my-2 rounded-xl z-50">
                         <div className="flex items-center justify-around h-16">
                             {hubNav.map((item) => {
-                                const isActive = pathname === item.href;
+                                const active = isActive(item.href);
 
                                 return (
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        className={`flex flex-col items-center justify-center flex-1 gap-1 ${isActive
-                                                ? "text-primary"
-                                                : "text-muted-foreground"
+                                        className={`flex flex-col items-center justify-center flex-1 gap-1 ${active
+                                            ? "text-primary"
+                                            : "text-muted-foreground"
                                             }`}
                                     >
                                         <item.icon size={22} />
-                                        <span className="text-[10px]">{item.label}</span>
+                                        <span className="text-[10px]">
+                                            {item.label}
+                                        </span>
                                     </Link>
                                 );
                             })}
